@@ -1,4 +1,4 @@
-
+//Buttons Settings
 .button
 {
 -fx-background-color : #0099CC;
@@ -11,6 +11,27 @@
 {
 -fx-background-color : #006080;
 }
+
+//Font Style ComboBox Settings
+.combo-box-base {
+       -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .scroll-pane {
     -fx-background-color: #02030A;
