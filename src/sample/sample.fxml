@@ -50,26 +50,32 @@
       </HBox>
       <TextArea fx:id="ta_TextArea" layoutY="30.0" prefHeight="642.0" prefWidth="932.0" scrollTop="1.0" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <font>
-            <Font name="Arial" size="15.0" />
+            <Font name="Pecita" size="24.0" />
          </font></TextArea>
-      <VBox fx:id="vb_StylePan" alignment="TOP_CENTER" layoutX="736.0" layoutY="30.0" prefHeight="636.0" prefWidth="203.0" style="-fx-background-color: #00b4cc;" visible="false" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="736.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="30.0">
+      <VBox fx:id="vb_StylePan" alignment="TOP_CENTER" layoutX="736.0" layoutY="30.0" prefHeight="636.0" prefWidth="203.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="736.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Label alignment="CENTER" text="Style Editing" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" text="Style Editing" textAlignment="CENTER" textFill="#0099cc">
                <padding>
                   <Insets top="18.0" />
                </padding>
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ComboBox editable="true" prefWidth="150.0" promptText="Font Style" visibleRowCount="3" />
+            <ComboBox editable="true" prefHeight="22.0" prefWidth="111.0" promptText="Font Style" visibleRowCount="3">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></ComboBox>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </VBox>
       <HBox fx:id="hb_MistakePan" layoutY="414.0" prefHeight="246.0" prefWidth="932.0" style="-fx-background-color: #f3f3f3;" visible="false" />
-      <HBox fx:id="hb_FinishPan" layoutY="36.0" prefHeight="630.0" prefWidth="932.0" style="-fx-background-color: #73b9d1;" AnchorPane.bottomAnchor="-6.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+      <HBox fx:id="hb_FinishPan" layoutY="36.0" prefHeight="630.0" prefWidth="932.0" style="-fx-background-color: #73b9d1;" visible="false" AnchorPane.bottomAnchor="-6.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
          <children>
             <Button mnemonicParsing="false" prefHeight="630.0" prefWidth="477.0" stylesheets="@Style.css" text="Print">
                <graphic>

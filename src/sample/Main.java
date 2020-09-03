@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Main extends Application {
 
     @Override
@@ -14,6 +17,10 @@ public class Main extends Application {
         primaryStage.setTitle("Zing");
         primaryStage.setScene(new Scene(root, 932, 660));
         primaryStage.show();
+
+        //Call method autosave() from class Controller
+//        Controller cont = new Controller();
+//        cont.autosave();
     }
 
 
