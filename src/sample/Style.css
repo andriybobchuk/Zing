@@ -12,6 +12,25 @@
 -fx-background-color : #006080;
 }
 
+
+.flipped-button
+{
+-fx-background-color : WHITE;
+-fx-text-fill : #007a9c;
+-fx-background-radius: 0;
+-fx-effect: dropshadow( one-pass-box , #0086b3 , 6 , 0.0 , -2 , 2 );
+
+}
+.flipped-button:hover{
+-fx-background-color :  #0070cc;
+-fx-text-fill : WHITE;
+-fx-effect: dropshadow( one-pass-box , #006080 , 10 , 0.0 , -1 , 1 );
+}
+.flipped-button:pressed
+{
+-fx-background-color : #006080;
+}
+
 //Font Style ComboBox Settings
 .combo-box-base {
        -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
