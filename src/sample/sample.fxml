@@ -55,7 +55,7 @@
             </Button>
          </children>
       </HBox>
-      <TextArea fx:id="ta_TextArea" disable="true" layoutY="30.0" prefHeight="642.0" prefWidth="932.0" scrollTop="1.0" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TextArea fx:id="ta_TextArea" disable="true" layoutY="30.0" prefHeight="642.0" prefWidth="932.0" scrollTop="1.0" wrapText="true" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font name="Pecita" size="18.0" />
          </font>
@@ -121,9 +121,9 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="p_Hello" layoutX="192.0" layoutY="144.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #0099CC;" stylesheets="@Style.css">
+      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #0099CC;" stylesheets="@Style.css">
          <children>
-            <Label layoutX="282.0" layoutY="59.0" prefHeight="43.0" prefWidth="203.0" text="Hello, it's Zing 1.0" textFill="WHITE">
+            <Label layoutX="277.0" layoutY="59.0" prefHeight="43.0" prefWidth="213.0" text="Hello, it's Zing 1.78" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
@@ -136,7 +136,7 @@
                <image>
                   <Image url="@Resources/images/Splash1.jpg" />
                </image></ImageView>
-            <Hyperlink fx:id="hl" layoutX="327.0" layoutY="283.0" text="andriybobchuk.com" textFill="WHITE" underline="true" />
+            <Hyperlink fx:id="hl" layoutX="327.0" layoutY="283.0" onAction="#getURL" text="andriybobchuk.com" textFill="WHITE" underline="true" />
             <Button layoutX="505.0" layoutY="2.0" mnemonicParsing="false" onAction="#getBtn_CreateNew" prefHeight="25.0" prefWidth="26.0" stylesheets="@Style.css" />
             <Button layoutX="301.0" layoutY="230.0" mnemonicParsing="false" onAction="#getBtn_Open" prefHeight="43.0" prefWidth="165.0" styleClass="flipped-button" stylesheets="@Style.css" text="Open existing" textFill="#007a9c">
                <font>

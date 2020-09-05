@@ -2,8 +2,12 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.print.JobSettings;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
@@ -16,9 +20,15 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class Controller<font> {
+public class Controller {
 
     @FXML
     private Button btn_Write;
@@ -46,6 +56,10 @@ public class Controller<font> {
     private Pane p_Hello;
     @FXML
     private Hyperlink hl;
+    @FXML
+    private Stage app;
+
+    public boolean firstSaveDone = false;
 
 
 //    public void getTa_Text() {
@@ -137,9 +151,24 @@ public class Controller<font> {
     }
 
     //Method getBtn_Style returns app setup to Style Panel(closes all OTHER tabs)
-    public void getBtn_Style(ActionEvent e) {
+    public void getBtn_Style(ActionEvent e) throws IOException {
         hb_MistakePan.setVisible(false); //Hides mistakes panel
         hb_FinishPan.setVisible(false); //Hides finish panel
+
+       // Stage stage = (Stage) app.getScene.getWindow();
+
+//        Main main = new Main();
+//        Stage primarystage = main.primaryStage;
+//        primarystage.setResizable(false);
+
+//        Parent blah = FXMLLoader.load(getClass().getResource("Controller.fxml"));
+//        Scene scene = new Scene(blah);
+//        Stage appStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+//        appStage.setScene(scene);
+//        appStage.setResizable(false);
+
+
+
 
         //Hide/Show this panel (Style) on double click
         if (vb_StylePan.isVisible()) {
@@ -158,6 +187,7 @@ public class Controller<font> {
         hb_FinishPan.setVisible(true);
 
     }
+
 
 
     //Methods getBtn_CreateNew and the following getBtn_Open are executed when the user chooses either
@@ -186,13 +216,46 @@ public class Controller<font> {
                 new FileChooser.ExtensionFilter("All Files", "*.*"));
 
         File file = chooser.showSaveDialog(stage);
+        classFile=file;
 
         if (file != null) {
             FileWriter FW = new FileWriter(file.getAbsolutePath());
             FW.write(ta_TextArea.getText().toString());
             FW.close();
+
+            //Sets autosave time
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleWithFixedDelay(() -> {
+                try {
+                    autoSave();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }, 0, 2, TimeUnit.SECONDS);
+        }
+
+    }
+
+    public File classFile;//to use this variable in method autoSave which is outside of getBtn_CreateNew
+
+    public void autoSave() throws IOException {
+        System.out.println("File saved");
+
+        if (classFile != null) {
+            FileWriter FW = new FileWriter(classFile.getAbsolutePath());
+            FW.write(ta_TextArea.getText().toString());
+            FW.close();
         }
     }
+
+//    public void lastSave() throws IOException {
+//        if (classFile != null) {
+//            FileWriter FW = new FileWriter(classFile.getAbsolutePath());
+//            FW.write(ta_TextArea.getText().toString());
+//            FW.close();
+//            System.out.println("File saved for the last time");
+//        }
+//    }
 
     public void getBtn_Open(ActionEvent e) throws IOException {
         //At first the whole notepad is disabled (only a splash screen is active so user
@@ -219,6 +282,26 @@ public class Controller<font> {
             sb.append(myText + "\n");
         }
         ta_TextArea.setText(sb.toString());
+    }
+
+
+
+
+
+
+
+
+
+    //Method shows you my site in default browser
+    public void getURL (ActionEvent e)
+    {
+        try {
+            Desktop.getDesktop().browse(new URL("https://www.andriybobchuk.com/").toURI());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
     }
 
     
@@ -252,4 +335,18 @@ public class Controller<font> {
 //            FW.close();
 //        }
 //    }
+
+
+    Stage thisStage;
+
+    public void setStage (Stage stage){
+        thisStage = stage;
+    }
+
+    public void showStage(){
+        thisStage.setTitle("Titel in der MainController.java geändert");
+        thisStage.show();
+    }
+
+
 }
