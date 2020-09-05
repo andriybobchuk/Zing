@@ -37,6 +37,18 @@
 }
 
 
+.pane
+{
+fx-effect: dropshadow( one-pass-box , #006080 , 80 , 0.0 , -5 , 5 );
+
+}
+
+
+.text-area .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
+
+
 
 
 

@@ -121,7 +121,7 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="p_Hello" layoutX="192.0" layoutY="144.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #0099CC;">
+      <Pane fx:id="p_Hello" layoutX="192.0" layoutY="144.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #0099CC;" stylesheets="@Style.css">
          <children>
             <Label layoutX="282.0" layoutY="59.0" prefHeight="43.0" prefWidth="203.0" text="Hello, it's Zing 1.0" textFill="WHITE">
                <font>
@@ -136,9 +136,9 @@
                <image>
                   <Image url="@Resources/images/Splash1.jpg" />
                </image></ImageView>
-            <Hyperlink layoutX="327.0" layoutY="283.0" text="andriybobchuk.com" textFill="WHITE" underline="true" />
+            <Hyperlink fx:id="hl" layoutX="327.0" layoutY="283.0" text="andriybobchuk.com" textFill="WHITE" underline="true" />
             <Button layoutX="505.0" layoutY="2.0" mnemonicParsing="false" onAction="#getBtn_CreateNew" prefHeight="25.0" prefWidth="26.0" stylesheets="@Style.css" />
-            <Button layoutX="301.0" layoutY="230.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="165.0" styleClass="flipped-button" stylesheets="@Style.css" text="Open existing" textFill="#007a9c">
+            <Button layoutX="301.0" layoutY="230.0" mnemonicParsing="false" onAction="#getBtn_Open" prefHeight="43.0" prefWidth="165.0" styleClass="flipped-button" stylesheets="@Style.css" text="Open existing" textFill="#007a9c">
                <font>
                   <Font size="13.5" />
                </font>
