@@ -59,7 +59,9 @@ public class Controller {
     @FXML
     private Stage app;
 
-    public boolean firstSaveDone = false;
+    public boolean myWorkIsSaved = false;
+
+//    public boolean firstSaveDone = false;
 
 
 //    public void getTa_Text() {
@@ -80,6 +82,9 @@ public class Controller {
 //        cb_Font.setItems(jvmChoices);
 //
 //    }
+
+
+    /*=============================THE BEGINNING OF PRINTER TASKS===================================================*/
 
     //onActionPageSetup, createPrinterJob, setPrinterJobSettings, onActionPrint are the four methods for printing
     @FXML
@@ -129,6 +134,9 @@ public class Controller {
             }
         }
     }
+    /*=============================THE END OF PRINTER TASKS========================================================*/
+
+
 
     //Method getBtn_Write returns app setup to its normal view(closes all tabs)
     public void getBtn_Write(ActionEvent e) {
@@ -155,21 +163,6 @@ public class Controller {
         hb_MistakePan.setVisible(false); //Hides mistakes panel
         hb_FinishPan.setVisible(false); //Hides finish panel
 
-       // Stage stage = (Stage) app.getScene.getWindow();
-
-//        Main main = new Main();
-//        Stage primarystage = main.primaryStage;
-//        primarystage.setResizable(false);
-
-//        Parent blah = FXMLLoader.load(getClass().getResource("Controller.fxml"));
-//        Scene scene = new Scene(blah);
-//        Stage appStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-//        appStage.setScene(scene);
-//        appStage.setResizable(false);
-
-
-
-
         //Hide/Show this panel (Style) on double click
         if (vb_StylePan.isVisible()) {
             vb_StylePan.setVisible(false);
@@ -179,20 +172,34 @@ public class Controller {
     }
 
     //Method getBtn_Finish returns app setup to Finish Panel(closes all OTHER tabs)
-    public void getBtn_Finish(ActionEvent e)
-    {
+    public void getBtn_Finish(ActionEvent e) throws IOException {
         //Hide all other tabs
         vb_StylePan.setVisible(false);
         hb_MistakePan.setVisible(false);
         hb_FinishPan.setVisible(true);
 
+        if(myWorkIsSaved == false)//If you haven't saved your work yet, do it now.
+        {
+            getBtn_CreateNew();
+        }
     }
 
 
+    /*=============================THE BEGINNING OF SAVE/OPEN/AUTOSAVE HELL========================================*/
 
-    //Methods getBtn_CreateNew and the following getBtn_Open are executed when the user chooses either
-    // "CREATE new file" btn or "OPEN existing" btn on a splash screen
-    public void getBtn_CreateNew(ActionEvent e) throws IOException {
+    //1) Methods getBtn_CreateNew and the following getBtn_Open are executed when the user chooses either
+    // "CREATE new file" btn or "OPEN existing" btn on a splash screen.
+    //2) Methods autoSave and autoSaveImportedFile save automatically file with a given timer. The difference between
+    // these two methods is that autoSave saves file where you have chosen while creating new file and
+    // autoSaveImportedFile saves it where you opened it from.
+
+    public File classFile;//to use the file directory variable in method autoSave FOR NEW FILES which is outside
+    // of getBtn_CreateNew
+
+    public File classSelectedFile;//to use the file directory variable in method autoSave FOR OPENED FILES
+    // which is outside of getBtn_Open
+
+    public void getBtn_CreateNew() throws IOException {
         //At first the whole notepad is disabled (only a splash screen is active so user
         //choose an action OPEN or CREATE. That is why after clicking the button we should enable the notepad.
         hb_Menu.setDisable(false);
@@ -223,7 +230,8 @@ public class Controller {
             FW.write(ta_TextArea.getText().toString());
             FW.close();
 
-            //Sets autosave time
+            //Sets autosave timing and calls autosave method for CREATED FILE(Yes, autosave methods for new and
+            // opened files differ)
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleWithFixedDelay(() -> {
                 try {
@@ -236,26 +244,18 @@ public class Controller {
 
     }
 
-    public File classFile;//to use this variable in method autoSave which is outside of getBtn_CreateNew
-
     public void autoSave() throws IOException {
-        System.out.println("File saved");
+        System.out.println("New file saved");
 
-        if (classFile != null) {
+        myWorkIsSaved = true; //That means while you press the FINISH btn you will not need to save it
+        // one more time. (Cuz AUTOSAVE do it for you!)
+
+         if (classFile != null) {
             FileWriter FW = new FileWriter(classFile.getAbsolutePath());
             FW.write(ta_TextArea.getText().toString());
             FW.close();
         }
     }
-
-//    public void lastSave() throws IOException {
-//        if (classFile != null) {
-//            FileWriter FW = new FileWriter(classFile.getAbsolutePath());
-//            FW.write(ta_TextArea.getText().toString());
-//            FW.close();
-//            System.out.println("File saved for the last time");
-//        }
-//    }
 
     public void getBtn_Open(ActionEvent e) throws IOException {
         //At first the whole notepad is disabled (only a splash screen is active so user
@@ -271,6 +271,8 @@ public class Controller {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open File");
         File selectedFile = chooser.showOpenDialog(stage);
+        classSelectedFile=selectedFile;
+
         FileReader FR = new FileReader(selectedFile.getAbsolutePath().toString());
         BufferedReader BR = new BufferedReader(FR);
 
@@ -282,17 +284,40 @@ public class Controller {
             sb.append(myText + "\n");
         }
         ta_TextArea.setText(sb.toString());
+
+
+        //Sets autosave time ad calls autosave method for IMPORTED FILE
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleWithFixedDelay(() -> {
+            try {
+                autoSaveImportedFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }, 0, 2, TimeUnit.SECONDS);
+
     }
 
+    public void autoSaveImportedFile() throws IOException {
+        System.out.println("Imported file saved");
+
+        myWorkIsSaved = true; //That means while you press the FINISH btn you will not need to save it
+        // one more time. (Cuz AUTOSAVE do it for you!)
+
+        if (classSelectedFile != null) {
+            FileWriter FW = new FileWriter(classSelectedFile.getAbsolutePath());
+            FW.write(ta_TextArea.getText().toString());
+            FW.close();
+        }
+    }
+
+    /*===========================THE END OF SAVE/OPEN/AUTOSAVE HELL============================================*/
 
 
 
 
 
-
-
-
-    //Method shows you my site in default browser
+    //Method shows you my site in your default browser when you click on a link in a splash screen.
     public void getURL (ActionEvent e)
     {
         try {
@@ -302,50 +327,6 @@ public class Controller {
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
         }
-    }
-
-    
-//    //Hyperlink hl = new Hyperlink();
-//        hl.setTooltip(new Tooltip("https://www.andriybobchuk.com/"));
-//        hl.setOnAction((ActionEvent event) -> {
-//        Hyperlink h = (Hyperlink) event.getTarget();
-//        String s = h.getTooltip().getText();
-//        getHostServices().showDocument(hl.getText());
-//        event.consume();
-//    });
-
-//    public void autosave() throws IOException {
-//        Stage stage = new Stage();
-//        FileChooser chooser = new FileChooser();
-//        chooser.setTitle("Save as");
-//        chooser.setInitialFileName("New File - Zing");
-//
-//        //Set Extension Filters
-//        chooser.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("Text", "*.txt"),
-//                new FileChooser.ExtensionFilter("Word document", "*.docx"),
-//                new FileChooser.ExtensionFilter("Rich Text Format", "*.rtf"),
-//                new FileChooser.ExtensionFilter("PDF", "*.pdf"),
-//                new FileChooser.ExtensionFilter("All Files", "*.*"));
-//
-//        File file = chooser.showSaveDialog(stage);
-//        if (file != null) {
-//            FileWriter FW = new FileWriter(file.getAbsolutePath());
-//            FW.write(ta_TextArea.getText().toString());
-//            FW.close();
-//        }
-//    }
-
-
-    Stage thisStage;
-
-    public void setStage (Stage stage){
-        thisStage = stage;
-    }
-
-    public void showStage(){
-        thisStage.setTitle("Titel in der MainController.java geändert");
-        thisStage.show();
     }
 
 
