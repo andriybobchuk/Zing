@@ -1,35 +1,55 @@
 package sample;
 
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXColorPicker;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.print.JobSettings;
 import javafx.print.PrinterJob;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.FontSelectorDialog;
 
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Controller {
+public class Controller implements Initializable {
 
+    @FXML
+    private JFXColorPicker cp_pen;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private Pane checkWrite;
+    @FXML
+    private Pane checkMistakes;
+    @FXML
+    private Pane checkStyle;
+    @FXML
+    private Pane checkFinish;
     @FXML
     private Button btn_Write;
     @FXML
@@ -58,10 +78,196 @@ public class Controller {
     private Hyperlink hl;
     @FXML
     private Stage app;
+    @FXML
+    private JFXComboBox jfxcb_Font;
+    @FXML
+    private JFXComboBox jfxcb_FontSize;
+
+    //private ObjectProperty<Font> fontStyle;
+
+
+
+
 
     public boolean myWorkIsSaved = false;
 
-//    public boolean firstSaveDone = false;
+    /*----------------------------------------------------------------------------------------------------------*/
+    String selectedFont = "Pecita";
+    int selectedFontSize = 18;
+    boolean bold = false;
+    boolean italic = false;
+    //boolean underlined = false; This feature is not ready now
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList fonts = FXCollections.observableArrayList(
+                "Times New Roman", "Arial", "Pecita", "Verdana", "Cambria", "Calibri", "System");
+        jfxcb_Font.setItems(fonts);
+        jfxcb_Font.setValue(selectedFont);
+        jfxcb_Font.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observableValue, Object o, Object t1) {
+                        System.out.println(t1);
+                        selectedFont = (String) t1;
+                        //ta_TextArea.setFont(Font.font(selectedFont, selectedFontSize));
+                    }
+                });
+
+
+        ObservableList fontSizes = FXCollections.observableArrayList(
+                18,24,48,72,100,120);
+        jfxcb_FontSize.setItems(fontSizes);
+        jfxcb_FontSize.setValue(selectedFontSize);
+        //jfxcb_FontSize.setEditable(true);
+
+        jfxcb_FontSize.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observableValue, Object o, Object t1) {
+                        System.out.println(t1);
+                        selectedFontSize = (int) t1;
+                        //ta_TextArea.setFont(Font.font(selectedFont, selectedFontSize));
+                    }
+                });
+
+
+    }
+
+    public void getBtn_Bold(ActionEvent e)
+    {
+        if(bold==false)
+        {
+            bold = true;
+        } else {
+            bold = false;
+        }
+    }
+
+    public void getBtn_Italic(ActionEvent e)
+    {
+
+        if(italic==false)
+        {
+            italic = true;
+        } else {
+            italic = false;
+        }
+    }
+
+//    public void getBtn_Underlined(ActionEvent e)
+//    {
+//
+//        if(underlined==false)
+//        {
+//            underlined = true;
+//        } else {
+//            underlined = false;
+//        }
+//    }
+
+    public void onClickApply(ActionEvent e)
+    {
+        if(bold==false&&italic==false)
+        {
+            ta_TextArea.setFont(Font.font(selectedFont, selectedFontSize));
+        }
+
+        if(bold==true&&italic==false)
+        {
+            ta_TextArea.setFont(Font.font(selectedFont, FontWeight.BOLD, selectedFontSize));
+        }
+
+        if(bold==false&&italic==true)
+        {
+            ta_TextArea.setFont(Font.font(selectedFont, FontPosture.ITALIC, selectedFontSize));
+        }
+
+        if(bold==true&&italic==true)
+        {
+            ta_TextArea.setFont(Font.font(selectedFont, FontWeight.BOLD, FontPosture.ITALIC, selectedFontSize));
+        }
+    }
+
+    public void fontSettings (ActionEvent e)
+    {
+        FontSelectorDialog dialog = new FontSelectorDialog(null);
+        dialog.setTitle("Zing - Font chooser");
+        Optional<Font> response = dialog.showAndWait();
+        System.out.println(response.get().getFamily());
+        System.out.println(response.get().getName());
+        System.out.println(response.get().getSize());
+
+        ta_TextArea.setFont(dialog.getResult());
+    }
+
+
+
+    /*----------------------------------------------------------------------------------------------------------*/
+
+
+//    public void changeColor(ActionEvent e)
+//    {
+//        Color selectedColor = cp_pen.getValue();
+//
+//        //ta_TextArea.setStyle("-fx-fill: red");
+//    }
+
+
+
+//        jfxcb_Font.getItems().add(new Label("Pecita"));
+//        jfxcb_Font.getItems().add(new Label("Java 1.7"));
+//        jfxcb_Font.getItems().add(new Label("Java 1.6"));
+//        jfxcb_Font.getItems().add(new Label("Java 1.5"));
+
+
+//        jfxcb_FontSize.getItems().add(new Label("1"));
+//        jfxcb_FontSize.getItems().add(new Label("Java 1.7"));
+//        jfxcb_FontSize.getItems().add(new Label("Java 1.6"));
+//        jfxcb_FontSize.getItems().add(new Label("Java 1.5"));
+
+        //jfxs_FontSize.setValue(18);
+
+
+
+//        jfxs_Font.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//                ta_TextArea.setFont(Font.font("Pecita", jfxs_Font.getValue()));
+//            }
+//        });
+
+//        jfxcb_FontSize.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//                ta_TextArea.setFont(Font.font(String.valueOf(jfxcb_FontSize.getItems()), 18));
+//            }
+//        });
+
+//        jfxcb_Font.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//                ta_TextArea.setFont(Font.font(jfxcb_Font.getItems(), 18));
+//            }
+//        });
+
+        //ta_TextArea.setFont(Font.font("Pecita", jfxs_FontSize.getValue()));
+
+
+//    public void initialize ()
+//    {
+//        slider.setMax(100);
+//        slider.setMin(0);
+//        slider.setValue(18);
+//
+//        slider.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//                ta_TextArea.setFont(Font.font("Pecita", slider.getValue()));
+//            }
+//        });
+//    }
 
 
 //    public void getTa_Text() {
@@ -83,6 +289,43 @@ public class Controller {
 //
 //    }
 
+//    @FXML
+//    void onActionFont(ActionEvent event) {
+//        FontSelectorDialog dialog = new FontSelectorDialog(fontProperty.get());
+//        dialog.showAndWait()
+//                .ifPresent((t) -> {
+//                    fontProperty.set(t);
+//                });
+//    }
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public void ChangeFontStyle() {
+//        fontstyle.setOnAction(e -> {
+//                    FontSelectorDialog fontSelectorDialog = new FontSelectorDialog(null);
+//                    fontSelectorDialog.setTitle("Select Font");
+//                    fontSelectorDialog.show();
+//                    textarea.setFont(fontSelectorDialog.getResults());
+//                }
+//        );
+//    }
 
     /*=============================THE BEGINNING OF PRINTER TASKS===================================================*/
 
@@ -143,6 +386,19 @@ public class Controller {
         vb_StylePan.setVisible(false); //Hides style panel
         hb_MistakePan.setVisible(false); //Hides mistakes panel
         hb_FinishPan.setVisible(false); //Hides finish panel
+
+        checkMistakes.setVisible(false);
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(false);
+
+        checkWrite.setVisible(true);
+
+//        if(checkWrite.isVisible()){
+//            checkWrite.setVisible(false);
+//        } else{
+//            checkWrite.setVisible(true);
+//        }
+
     }
 
     //Method getBtn_Mistakes returns app setup to Mistake Panel(closes all OTHER tabs)
@@ -150,12 +406,21 @@ public class Controller {
         vb_StylePan.setVisible(false); //Hides style panel
         hb_FinishPan.setVisible(false); //Hides finish panel
 
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(false);
+        checkWrite.setVisible(false);
+
+        hb_MistakePan.setVisible(true);
+        checkMistakes.setVisible(true);
+
         //Hide/Show this panel (Mistakes) on double click
-        if (hb_MistakePan.isVisible()) {
-            hb_MistakePan.setVisible(false);
-        } else {
-            hb_MistakePan.setVisible(true);
-        }
+//        if (hb_MistakePan.isVisible()) {
+//            hb_MistakePan.setVisible(false);
+//            checkMistakes.setVisible(false);
+//        } else {
+//            hb_MistakePan.setVisible(true);
+//            checkMistakes.setVisible(true);
+//        }
     }
 
     //Method getBtn_Style returns app setup to Style Panel(closes all OTHER tabs)
@@ -163,12 +428,28 @@ public class Controller {
         hb_MistakePan.setVisible(false); //Hides mistakes panel
         hb_FinishPan.setVisible(false); //Hides finish panel
 
+        checkMistakes.setVisible(false);
+        checkFinish.setVisible(false);
+        checkWrite.setVisible(false);
+
+        vb_StylePan.setVisible(true);
+        checkStyle.setVisible(true);
+
+//        ta_TextArea.setLayoutX(28);
+//        ta_TextArea.setLayoutY(59);
+//        ta_TextArea.setPrefWidth(644);
+//        ta_TextArea.setPrefHeight(613);
+
         //Hide/Show this panel (Style) on double click
-        if (vb_StylePan.isVisible()) {
-            vb_StylePan.setVisible(false);
-        } else {
-            vb_StylePan.setVisible(true);
-        }
+//        if (vb_StylePan.isVisible()) {
+//            vb_StylePan.setVisible(false);
+//            checkStyle.setVisible(false);
+//        } else {
+//            vb_StylePan.setVisible(true);
+//            checkStyle.setVisible(true);
+//
+////            ta_TextArea.setStyle("fx: layoutX=\"25.0\" layoutY=\"55.0\" prefHeight=\"605.0\" prefWidth=\"602.0\" scrollTop=\"1.0\" wrapText=\"true\" AnchorPane.bottomAnchor=\"-0.6000000000000227\" AnchorPane.leftAnchor=\"25.0\" AnchorPane.rightAnchor=\"304.6\" AnchorPane.topAnchor=\"55.0\"");
+//        }
     }
 
     //Method getBtn_Finish returns app setup to Finish Panel(closes all OTHER tabs)
@@ -177,6 +458,11 @@ public class Controller {
         vb_StylePan.setVisible(false);
         hb_MistakePan.setVisible(false);
         hb_FinishPan.setVisible(true);
+
+        checkWrite.setVisible(false);
+        checkMistakes.setVisible(false);
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(true);
 
         if(myWorkIsSaved == false)//If you haven't saved your work yet, do it now.
         {
@@ -328,6 +614,7 @@ public class Controller {
             ex.printStackTrace();
         }
     }
+
 
 
 }
