@@ -83,15 +83,10 @@ public class Controller implements Initializable {
     @FXML
     private JFXComboBox jfxcb_FontSize;
 
-    //private ObjectProperty<Font> fontStyle;
-
-
-
-
-
     public boolean myWorkIsSaved = false;
 
-    /*----------------------------------------------------------------------------------------------------------*/
+
+    /*=============================THE BEGINNING OF FONT STYLE SETTINGS=============================================*/
     String selectedFont = "Pecita";
     int selectedFontSize = 18;
     boolean bold = false;
@@ -202,130 +197,10 @@ public class Controller implements Initializable {
         ta_TextArea.setFont(dialog.getResult());
     }
 
-
-
-    /*----------------------------------------------------------------------------------------------------------*/
-
-
-//    public void changeColor(ActionEvent e)
-//    {
-//        Color selectedColor = cp_pen.getValue();
-//
-//        //ta_TextArea.setStyle("-fx-fill: red");
-//    }
+    /*=============================THE END OF FONT STYLE SETTINGS===================================================*/
 
 
 
-//        jfxcb_Font.getItems().add(new Label("Pecita"));
-//        jfxcb_Font.getItems().add(new Label("Java 1.7"));
-//        jfxcb_Font.getItems().add(new Label("Java 1.6"));
-//        jfxcb_Font.getItems().add(new Label("Java 1.5"));
-
-
-//        jfxcb_FontSize.getItems().add(new Label("1"));
-//        jfxcb_FontSize.getItems().add(new Label("Java 1.7"));
-//        jfxcb_FontSize.getItems().add(new Label("Java 1.6"));
-//        jfxcb_FontSize.getItems().add(new Label("Java 1.5"));
-
-        //jfxs_FontSize.setValue(18);
-
-
-
-//        jfxs_Font.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                ta_TextArea.setFont(Font.font("Pecita", jfxs_Font.getValue()));
-//            }
-//        });
-
-//        jfxcb_FontSize.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                ta_TextArea.setFont(Font.font(String.valueOf(jfxcb_FontSize.getItems()), 18));
-//            }
-//        });
-
-//        jfxcb_Font.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                ta_TextArea.setFont(Font.font(jfxcb_Font.getItems(), 18));
-//            }
-//        });
-
-        //ta_TextArea.setFont(Font.font("Pecita", jfxs_FontSize.getValue()));
-
-
-//    public void initialize ()
-//    {
-//        slider.setMax(100);
-//        slider.setMin(0);
-//        slider.setValue(18);
-//
-//        slider.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                ta_TextArea.setFont(Font.font("Pecita", slider.getValue()));
-//            }
-//        });
-//    }
-
-
-//    public void getTa_Text() {
-//        Text text = new Text(ta_TextArea.getText());
-//        Font font = Font.loadFont("file:resources/fonts/NinaCTT.ttf", 45);
-//        text.setFont(font);
-//    }
-
-//    static ObservableList<String> jvmChoices = FXCollections.observableArrayList(
-//            "Java",
-//            "Kotlin",
-//            "Groovy",
-//            "Scala",
-//            "Clojure"
-//    );
-//
-//    public void getCb_Font(ActionEvent e) {
-//        cb_Font.setItems(jvmChoices);
-//
-//    }
-
-//    @FXML
-//    void onActionFont(ActionEvent event) {
-//        FontSelectorDialog dialog = new FontSelectorDialog(fontProperty.get());
-//        dialog.showAndWait()
-//                .ifPresent((t) -> {
-//                    fontProperty.set(t);
-//                });
-//    }
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public void ChangeFontStyle() {
-//        fontstyle.setOnAction(e -> {
-//                    FontSelectorDialog fontSelectorDialog = new FontSelectorDialog(null);
-//                    fontSelectorDialog.setTitle("Select Font");
-//                    fontSelectorDialog.show();
-//                    textarea.setFont(fontSelectorDialog.getResults());
-//                }
-//        );
-//    }
 
     /*=============================THE BEGINNING OF PRINTER TASKS===================================================*/
 
@@ -469,6 +344,7 @@ public class Controller implements Initializable {
             getBtn_CreateNew();
         }
     }
+
 
 
     /*=============================THE BEGINNING OF SAVE/OPEN/AUTOSAVE HELL========================================*/
