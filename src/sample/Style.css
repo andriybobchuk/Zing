@@ -53,6 +53,53 @@
 
 
 
+.btn-mainMenu
+{
+-fx-background-color :   #1976D2;
+-fx-text-fill : WHITE;
+-fx-background-radius: 0;
+
+}
+.btn-mainMenu:hover{
+-fx-background-color :  #0264c4;
+-fx-text-fill : WHITE;
+
+}
+.btn-mainMenu:pressed
+{
+-fx-background-color : #014385;
+}
+
+
+.btn-Green
+{
+-fx-background-color :    #0e9654;
+-fx-text-fill : WHITE;
+-fx-background-radius: 0;
+
+}
+.btn-Green:hover{
+-fx-background-color :  #0b7843;
+-fx-text-fill : WHITE;
+-fx-effect: dropshadow( one-pass-box , #0b7843 , 10 , 0.0 , -1 , 1 );
+}
+.btn-Green:pressed
+{
+-fx-background-color : #074b2a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,49 +184,4 @@
 .pane {
     -fx-border-color: grey;
     -fx-border-width: 0.3;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.scroll-pane {
-    -fx-background-color: #02030A;
-}
-
-.scroll-bar:horizontal, .scroll-bar:vertical{
-    -fx-background-color:transparent;
-}
-
-.increment-button, .decrement-button {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-}
-
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 0em;
-}
-
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #10165F;
-    -fx-background-radius: 5em;
-}
-
-.scroll-pane > .corner {
-    -fx-background-color: black;
 }
