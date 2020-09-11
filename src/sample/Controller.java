@@ -30,8 +30,8 @@ import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -84,6 +84,127 @@ public class Controller implements Initializable {
     private JFXComboBox jfxcb_FontSize;
 
     public boolean myWorkIsSaved = false;
+
+
+    /*=============================THE BEGINNING OF SPELLCHECK FEATURE==============================================*/
+
+//    public void spellcheck()
+//    {
+//        Dictionary dict_EN = new Dictionary();
+////            @Override
+////            public int size() {
+////                return 0;
+////            }
+////
+////            @Override
+////            public boolean isEmpty() {
+////                return false;
+////            }
+////
+////            @Override
+////            public Enumeration keys() {
+////                return null;
+////            }
+////
+////            @Override
+////            public Enumeration elements() {
+////                return null;
+////            }
+////
+////            @Override
+////            public Object get(Object key) {
+////                return null;
+////            }
+////
+////            @Override
+////            public Object put(Object key, Object value) {
+////                return null;
+////            }
+////
+////            @Override
+////            public Object remove(Object key) {
+////                return null;
+////            }
+//
+//    }
+
+    public void spellcheck(){
+
+        String word = null;
+        Scanner scan = new Scanner(System.in);
+
+
+        //word = scan.nextLine();
+        word = ta_TextArea.getText().toString();
+
+        try {
+            if(isInDictionary(word, new Scanner(new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\Resources\\spellcheck\\dictionary_EN.txt")))){
+                System.out.println(word + " is in the dictionary");
+            } else System.out.println(word + " is NOT in the dictionary");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean isInDictionary(String word, Scanner dictionary){
+
+        List<String> dictionaryList = new ArrayList<String>();
+        for(int i = 0; dictionary.hasNextLine() != false; i++){
+            dictionaryList.add(dictionary.nextLine());
+            if(dictionaryList.get(i) == word){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    //----------------------------------------------------------------
+
+    public void finff() throws IOException
+    {
+        File f1=new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\input.txt"); //Creation of File Descriptor for input file
+        String[] words=null;  //Intialize the word Array
+        FileReader fr = null;  //Creation of File Reader object
+        try {
+            fr = new FileReader(f1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
+        String s;
+        String input="Java";   // Input word to be searched
+        int count=0;   //Intialize the word to zero
+        while((s=br.readLine())!=null)   //Reading Content from the file
+        {
+            words=s.split(" ");  //Split the word using space
+            for (String word : words)
+            {
+                if (word.equals(input))   //Search for the given word
+                {
+                    count++;    //If Present increase the count by one
+                }
+            }
+        }
+        if(count!=0)  //Check for count not equal to zero
+        {
+            System.out.println("The given word is present for "+count+ " Times in the file");
+        }
+        else
+        {
+            System.out.println("The given word is not present in the file");
+        }
+
+        fr.close();
+    }
+
+
+
+
+
+    /*=============================THE END OF SPELLCHECK FEATURE====================================================*/
+
 
 
     /*=============================THE BEGINNING OF FONT STYLE SETTINGS=============================================*/
@@ -277,7 +398,7 @@ public class Controller implements Initializable {
     }
 
     //Method getBtn_Mistakes returns app setup to Mistake Panel(closes all OTHER tabs)
-    public void getBtn_Mistakes(ActionEvent e) {
+    public void getBtn_Mistakes(ActionEvent e) throws IOException {
         vb_StylePan.setVisible(false); //Hides style panel
         hb_FinishPan.setVisible(false); //Hides finish panel
 
@@ -287,6 +408,8 @@ public class Controller implements Initializable {
 
         hb_MistakePan.setVisible(true);
         checkMistakes.setVisible(true);
+
+        finff();
 
         //Hide/Show this panel (Mistakes) on double click
 //        if (hb_MistakePan.isVisible()) {
