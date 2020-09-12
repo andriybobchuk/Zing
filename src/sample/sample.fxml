@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -21,7 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <HBox fx:id="hb_Menu" prefHeight="28.0" prefWidth="932.0" style="-fx-background-color: #1976D2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="hb_Menu" disable="true" prefHeight="28.0" prefWidth="932.0" style="-fx-background-color: #1976D2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button id="#one" fx:id="btn_Write" mnemonicParsing="false" onAction="#getBtn_Write" prefHeight="34.0" prefWidth="132.0" styleClass="btn-mainMenu" stylesheets="@Style.css" text=" Write" textFill="WHITE">
                <graphic>
@@ -56,7 +56,7 @@
             </Button>
          </children>
       </HBox>
-      <TextArea fx:id="ta_TextArea" layoutY="30.0" prefHeight="630.0" prefWidth="932.0" scrollTop="1.0" styleClass="text-area" wrapText="true" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TextArea fx:id="ta_TextArea" disable="true" layoutY="30.0" prefHeight="630.0" prefWidth="932.0" scrollTop="1.0" styleClass="text-area" wrapText="true" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -136,26 +136,13 @@
                   </Button>
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="291.0" prefHeight="46.0" prefWidth="232.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.6000244140625" minWidth="10.0" prefWidth="116.599951171875" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.00004882812502" minWidth="10.0" prefWidth="115.00004882812502" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="219.2" minHeight="10.0" prefHeight="103.2000015258789" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <JFXToggleButton prefHeight="52.0" prefWidth="218.0" text="Italic" />
-                  <JFXToggleButton prefHeight="58.0" prefWidth="99.0" text="Bold" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
             <Pane prefHeight="0.9" prefWidth="145.0" style="-fx-background-color: WHITE;" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </VBox>
-      <HBox fx:id="hb_MistakePan" layoutY="414.0" prefHeight="246.0" prefWidth="932.0" style="-fx-background-color: #f3f3f3;" visible="false" />
+      <HBox fx:id="hb_MistakePan" layoutY="414.0" prefHeight="246.0" prefWidth="932.0" style="-fx-background-color: #f3f3f3;" visible="false" AnchorPane.bottomAnchor="-0.4000000000000057" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <HBox fx:id="hb_FinishPan" layoutY="36.0" prefHeight="630.0" prefWidth="932.0" style="-fx-background-color: #4e9cead1;" visible="false" AnchorPane.bottomAnchor="-6.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
          <children>
             <Button fx:id="btn_Print" mnemonicParsing="false" onAction="#onActionPrint" prefHeight="648.0" prefWidth="478.0" styleClass="btn-Printers" stylesheets="@Style.css" text="Print">
@@ -176,7 +163,7 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css" visible="false">
+      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css">
          <children>
             <Label layoutX="277.0" layoutY="59.0" prefHeight="43.0" prefWidth="213.0" text="Hello, it's Zing 1.78" textFill="WHITE">
                <font>
@@ -214,10 +201,6 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Pane fx:id="checkWrite" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00e3ff;" />
-      <Pane fx:id="checkMistakes" layoutX="134.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
-      <Pane fx:id="checkStyle" layoutX="266.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
-      <Pane fx:id="checkFinish" layoutX="398.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
       <Button fx:id="btn_msg_isSaved" layoutX="328.0" layoutY="587.0" mnemonicParsing="false" onAction="#show_msg_isSaved" prefHeight="30.0" prefWidth="275.0" styleClass="btn-HintGreen" stylesheets="@Style.css" text="Your work is saved automatically!" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="328.0" AnchorPane.rightAnchor="328.8">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -234,5 +217,36 @@
             <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" />
          </graphic>
       </Button>
+      <SplitPane fx:id="sp_SpellCheckLayout" dividerPositions="0.5728835136855506" layoutY="31.0" orientation="VERTICAL" prefHeight="630.0" prefWidth="932.0" visible="false" AnchorPane.bottomAnchor="-1.3999999999999773" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TextArea fx:id="ta_LineCounter" editable="false" layoutX="-5.0" layoutY="-6.0" prefHeight="364.0" prefWidth="26.0" visible="false" wrapText="true" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.topAnchor="-6.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextArea>
+                  <TextArea fx:id="ta_CheckArea" layoutX="-2.0" layoutY="-6.0" prefHeight="364.0" prefWidth="932.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="377.0" style="-fx-background-color: #f3f3f3;">
+               <children>
+                  <TextArea fx:id="ta_Errors" editable="false" layoutX="-8.0" layoutY="-6.0" prefHeight="272.0" prefWidth="943.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-8.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="-6.0">
+                     <font>
+                        <Font name="MV Boli" size="18.0" />
+                     </font>
+                  </TextArea>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <Pane fx:id="checkWrite" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00e3ff;" />
+      <Pane fx:id="checkMistakes" layoutX="134.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
+      <Pane fx:id="checkStyle" layoutX="266.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
+      <Pane fx:id="checkFinish" layoutX="398.0" layoutY="30.0" prefHeight="2.0" prefWidth="132.0" style="-fx-background-color: #00ffc8;" visible="false" />
    </children>
 </AnchorPane>

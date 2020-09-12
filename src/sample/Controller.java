@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -92,6 +93,14 @@ public class Controller implements Initializable {
     private Button btn_msg_notSaved;
     @FXML
     private Pane checkNotSaved;
+    @FXML
+    private SplitPane sp_SpellCheckLayout;
+    @FXML
+    private TextArea ta_LineCounter;
+    @FXML
+    private TextArea ta_CheckArea;
+    @FXML
+    private TextArea ta_Errors;
 
 
     public boolean myWorkIsSaved = false;
@@ -100,25 +109,64 @@ public class Controller implements Initializable {
     /*=============================THE BEGINNING OF SPELLCHECK FEATURE==============================================*/
 
 
-    public void attempSix()
-    {
-        //Dictionary
-        String[] wordlist = new String[3];
-        wordlist[0] = "Hello";
-        wordlist[1] = "I'm";
-        wordlist[2] = "Andriy";
+    public void findMistakes() {
 
+        //Dictionary
+        Scanner sc = null;
+        try {
+            sc = new Scanner(new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\Resources\\spellcheck\\dictionary_EN.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        List<String> lines = new ArrayList<String>();
+        while (sc.hasNextLine()) {
+            lines.add(sc.nextLine());
+        }
+
+        String[] wordlist = lines.toArray(new String[0]);
+
+
+
+
+        if(sp_SpellCheckLayout.isVisible())
+        {
+//            ta_CheckArea.setText(ta_TextArea.getText());
+            ta_Errors.setText("");
+        }
+        else
+        {
+            ta_CheckArea.setText(ta_TextArea.getText());
+        }
+
+        sp_SpellCheckLayout.setVisible(true);
         //input
-        String input = "Helo I'm andriy";
+        String input = ta_CheckArea.getText();//textarea
+
+
 
         if(spellCheck(input, wordlist))
         {
+            ta_Errors.setText("Well done! No mistakes");
             System.out.println("No errors");
         }
         else
         {
             System.out.println("Errors");
         }
+
+
+        //just a code for side numeric area
+        for(int i=1; i<10; i++)
+        {
+            ta_LineCounter.appendText(i + "\n");
+        }
+
+
+
+
+
+
+
     }
 
     public boolean spellCheck (String input, String[] dic)
@@ -130,11 +178,14 @@ public class Controller implements Initializable {
 
         while(spellChecker.hasNext())
         {
+
             currentCheck = spellChecker.next();
             if(!isSpecial(currentCheck))
             {
                 if(!checkWord(currentCheck, dic))
                 {
+                    ta_Errors.appendText("'" + currentCheck + "'" + " is spelled incorrectly \n");
+//                    ta_Errors.setText(currentCheck + " is incorrect");
                     System.out.println(currentCheck + " is spelt incorrectly");
                     noErrors = false;
                 }
@@ -170,159 +221,6 @@ public class Controller implements Initializable {
 
 
 
-
-
-
-
-
-
-
-//    public void spellcheck()
-//    {
-//        Dictionary dict_EN = new Dictionary();
-////            @Override
-////            public int size() {
-////                return 0;
-////            }
-////
-////            @Override
-////            public boolean isEmpty() {
-////                return false;
-////            }
-////
-////            @Override
-////            public Enumeration keys() {
-////                return null;
-////            }
-////
-////            @Override
-////            public Enumeration elements() {
-////                return null;
-////            }
-////
-////            @Override
-////            public Object get(Object key) {
-////                return null;
-////            }
-////
-////            @Override
-////            public Object put(Object key, Object value) {
-////                return null;
-////            }
-////
-////            @Override
-////            public Object remove(Object key) {
-////                return null;
-////            }
-//
-//    }
-
-    public void spellcheck(){
-
-        String word = null;
-        Scanner scan = new Scanner(System.in);
-
-
-        //word = scan.nextLine();
-        word = ta_TextArea.getText().toString();
-
-        try {
-            if(isInDictionary(word, new Scanner(new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\Resources\\spellcheck\\dictionary_EN.txt")))){
-                System.out.println(word + " is in the dictionary");
-            } else System.out.println(word + " is NOT in the dictionary");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static boolean isInDictionary(String word, Scanner dictionary){
-
-        List<String> dictionaryList = new ArrayList<String>();
-        for(int i = 0; dictionary.hasNextLine() != false; i++){
-            dictionaryList.add(dictionary.nextLine());
-            if(dictionaryList.get(i) == word){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-    //----------------------------------------------------------------
-
-    public void finff() throws IOException
-    {
-        File dictionary_EN=new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\Resources\\spellcheck\\dictionary_EN.txt"); //Creation of File Descriptor for input file
-        String[] words=null;  //Intialize the word Array
-        FileReader fr = null;  //Creation of File Reader object
-        try {
-            fr = new FileReader(dictionary_EN);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
-        String s;
-        String inputSentence;   // Input word to be searched
-        String[] inputWords;
-
-
-        inputSentence=ta_TextArea.getText().toString();
-
-
-        while(!inputSentence.isEmpty()){
-            inputWords=ta_TextArea.getText().toString().split(" ");
-        }
-
-
-
-       //int count=0;   //Intialize the word to zero
-        boolean correct = false;
-
-
-
-        while((s=br.readLine())!=null)   //Reading Content from the file
-        {
-            words=s.split(" ");  //Split the word using space
-            for (String word : words)
-            {
-                if (word.equals(inputSentence))   //Search for the given word
-                {
-                    correct=true;
-                    //count++;    //If Present increase the count by one
-                }
-            }
-        }
-
-        if(correct==true)
-        {
-            System.out.println(words+"is in the dictionary");
-        }
-        else
-        {
-            System.out.println(words+"is NOT in the dictionary");
-        }
-
-        fr.close();
-    }
-    //----------------------------------------------------------------
-
-//    public void attempFour(ActionEvent e)
-//    {
-//        //#1
-//        File dictionary_EN = new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\input.txt");
-//
-//        //#2
-//        String[] userText = new String[255];
-//        userText = ta_TextArea.getText().toString();
-//
-//        //#3
-//        for(int i = 0; i <= userText.length(); i++)
-//        {
-////            if(file)
-//        }
-//
-//    }
 
 
 
@@ -515,6 +413,16 @@ public class Controller implements Initializable {
 
         checkWrite.setVisible(true);
 
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+
+//        sp_SpellCheckLayout.setVisible(false);
+//        ta_TextArea.setText(ta_CheckArea.getText());
+        ta_Errors.setText("");
+
 //        if(checkWrite.isVisible()){
 //            checkWrite.setVisible(false);
 //        } else{
@@ -535,9 +443,7 @@ public class Controller implements Initializable {
         hb_MistakePan.setVisible(true);
         checkMistakes.setVisible(true);
 
-       // spellcheck();
-//        finff();
-        attempSix();
+        findMistakes();
 
         //Hide/Show this panel (Mistakes) on double click
 //        if (hb_MistakePan.isVisible()) {
@@ -558,8 +464,17 @@ public class Controller implements Initializable {
         checkFinish.setVisible(false);
         checkWrite.setVisible(false);
 
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+        ta_Errors.setText("");
+
         vb_StylePan.setVisible(true);
         checkStyle.setVisible(true);
+
+
 
 //        ta_TextArea.setLayoutX(28);
 //        ta_TextArea.setLayoutY(59);
@@ -589,6 +504,13 @@ public class Controller implements Initializable {
         checkMistakes.setVisible(false);
         checkStyle.setVisible(false);
         checkFinish.setVisible(true);
+
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+        ta_Errors.setText("");
 
         if(myWorkIsSaved == false)//If you haven't saved your work yet, do it now.
         {
@@ -749,7 +671,7 @@ public class Controller implements Initializable {
             btn_msg_isSaved.setVisible(true);
         }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        PauseTransition pause = new PauseTransition(Duration.seconds(7));
         pause.setOnFinished(e -> btn_msg_isSaved.setVisible(false));
         pause.play();
 
@@ -769,7 +691,7 @@ public class Controller implements Initializable {
             btn_msg_notSaved.setVisible(true);
         }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(9));
+        PauseTransition pause = new PauseTransition(Duration.seconds(13));
         pause.setOnFinished(e -> btn_msg_notSaved.setVisible(false));
         pause.play();
 
