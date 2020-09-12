@@ -89,8 +89,76 @@
 }
 
 
+.btn-Close
+{
+-fx-background-color :    #2196F3;
+-fx-text-fill : WHITE;
+-fx-background-radius: 0;
+
+}
+.btn-Close:hover{
+-fx-background-color :  #F44336;
+-fx-text-fill : WHITE;
+-fx-effect: dropshadow( one-pass-box , #0b7843 , 10 , 0.0 , -1 , 1 );
+}
+.btn-Close:pressed
+{
+-fx-background-color : #7a231c;
+}
 
 
+.btn-Printers
+{
+-fx-background-color :    #2196F3;
+-fx-text-fill : WHITE;
+-fx-background-radius: 0;
+
+}
+.btn-Printers:hover{
+-fx-background-color :  #1a7cc9;
+-fx-text-fill : WHITE;
+
+}
+.btn-Printers:pressed
+{
+-fx-background-color : #15629e;
+}
+
+
+//-------------------------HINTS---------------------------------------------------------------------------------------
+.btn-HintGreen
+{
+-fx-background-color :    #0e9654;
+-fx-text-fill : WHITE;
+-fx-background-radius: 15;
+
+}
+.btn-HintGreen:hover{
+-fx-background-color :  #0b7843;
+-fx-text-fill : WHITE;
+-fx-effect: dropshadow( one-pass-box , #0b7843 , 10 , 0.0 , -1 , 1 );
+}
+.btn-HintGreen:pressed
+{
+-fx-background-color : #074b2a;
+}
+
+.btn-HintRed
+{
+-fx-background-color :    #F44336;
+-fx-text-fill : WHITE;
+-fx-background-radius: 15;
+
+}
+.btn-HintRed:hover{
+-fx-background-color :  #c4362b;
+-fx-text-fill : WHITE;
+-fx-effect: dropshadow( one-pass-box , #7a231c , 10 , 0.0 , -1 , 1 );
+}
+.btn-HintRed:pressed
+{
+-fx-background-color : #7a231c;
+}
 
 
 

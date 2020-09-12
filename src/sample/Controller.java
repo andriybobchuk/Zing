@@ -2,6 +2,7 @@ package sample;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXColorPicker;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,6 +25,7 @@ import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.controlsfx.dialog.FontSelectorDialog;
 
 import java.awt.*;
@@ -35,6 +37,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller implements Initializable {
 
@@ -82,11 +86,96 @@ public class Controller implements Initializable {
     private JFXComboBox jfxcb_Font;
     @FXML
     private JFXComboBox jfxcb_FontSize;
+    @FXML
+    private Button btn_msg_isSaved;
+    @FXML
+    private Button btn_msg_notSaved;
+    @FXML
+    private Pane checkNotSaved;
+
 
     public boolean myWorkIsSaved = false;
 
 
     /*=============================THE BEGINNING OF SPELLCHECK FEATURE==============================================*/
+
+
+    public void attempSix()
+    {
+        //Dictionary
+        String[] wordlist = new String[3];
+        wordlist[0] = "Hello";
+        wordlist[1] = "I'm";
+        wordlist[2] = "Andriy";
+
+        //input
+        String input = "Helo I'm andriy";
+
+        if(spellCheck(input, wordlist))
+        {
+            System.out.println("No errors");
+        }
+        else
+        {
+            System.out.println("Errors");
+        }
+    }
+
+    public boolean spellCheck (String input, String[] dic)
+    {
+        String currentCheck = "";
+        boolean noErrors = true;
+        Scanner spellChecker = new Scanner(input);
+        spellChecker.useDelimiter("\\s+");
+
+        while(spellChecker.hasNext())
+        {
+            currentCheck = spellChecker.next();
+            if(!isSpecial(currentCheck))
+            {
+                if(!checkWord(currentCheck, dic))
+                {
+                    System.out.println(currentCheck + " is spelt incorrectly");
+                    noErrors = false;
+                }
+            }
+        }
+        return noErrors;
+    }
+
+    public boolean isSpecial (String input)
+    {
+        Pattern pattern = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher match = pattern.matcher(input);
+        return match.find();
+    }
+
+    public boolean checkWord(String input, String[] dic)
+    {
+        boolean valid = false;
+        int length = dic.length;
+        int i=0;
+
+        while(!valid &&i<length)
+        {
+            if(input.trim().equalsIgnoreCase(dic[i]))
+            {
+                valid = true;
+            }
+            i++;
+        }
+        return valid;
+    }
+
+
+
+
+
+
+
+
+
+
 
 //    public void spellcheck()
 //    {
@@ -164,40 +253,77 @@ public class Controller implements Initializable {
 
     public void finff() throws IOException
     {
-        File f1=new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\input.txt"); //Creation of File Descriptor for input file
+        File dictionary_EN=new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\Resources\\spellcheck\\dictionary_EN.txt"); //Creation of File Descriptor for input file
         String[] words=null;  //Intialize the word Array
         FileReader fr = null;  //Creation of File Reader object
         try {
-            fr = new FileReader(f1);
+            fr = new FileReader(dictionary_EN);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
         String s;
-        String input="Java";   // Input word to be searched
-        int count=0;   //Intialize the word to zero
+        String inputSentence;   // Input word to be searched
+        String[] inputWords;
+
+
+        inputSentence=ta_TextArea.getText().toString();
+
+
+        while(!inputSentence.isEmpty()){
+            inputWords=ta_TextArea.getText().toString().split(" ");
+        }
+
+
+
+       //int count=0;   //Intialize the word to zero
+        boolean correct = false;
+
+
+
         while((s=br.readLine())!=null)   //Reading Content from the file
         {
             words=s.split(" ");  //Split the word using space
             for (String word : words)
             {
-                if (word.equals(input))   //Search for the given word
+                if (word.equals(inputSentence))   //Search for the given word
                 {
-                    count++;    //If Present increase the count by one
+                    correct=true;
+                    //count++;    //If Present increase the count by one
                 }
             }
         }
-        if(count!=0)  //Check for count not equal to zero
+
+        if(correct==true)
         {
-            System.out.println("The given word is present for "+count+ " Times in the file");
+            System.out.println(words+"is in the dictionary");
         }
         else
         {
-            System.out.println("The given word is not present in the file");
+            System.out.println(words+"is NOT in the dictionary");
         }
 
         fr.close();
     }
+    //----------------------------------------------------------------
+
+//    public void attempFour(ActionEvent e)
+//    {
+//        //#1
+//        File dictionary_EN = new File("D:\\DOCUMENTS\\Java_Sources\\Zing\\src\\sample\\input.txt");
+//
+//        //#2
+//        String[] userText = new String[255];
+//        userText = ta_TextArea.getText().toString();
+//
+//        //#3
+//        for(int i = 0; i <= userText.length(); i++)
+//        {
+////            if(file)
+//        }
+//
+//    }
+
 
 
 
@@ -208,7 +334,7 @@ public class Controller implements Initializable {
 
 
     /*=============================THE BEGINNING OF FONT STYLE SETTINGS=============================================*/
-    String selectedFont = "Pecita";
+    String selectedFont = "Segoe UI";
     int selectedFontSize = 18;
     boolean bold = false;
     boolean italic = false;
@@ -218,7 +344,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         ObservableList fonts = FXCollections.observableArrayList(
-                "Times New Roman", "Arial", "Pecita", "Verdana", "Cambria", "Calibri", "System");
+                "Segoe UI", "Pecita", "Times New Roman", "Arial", "Verdana", "Cambria", "Calibri", "System");
         jfxcb_Font.setItems(fonts);
         jfxcb_Font.setValue(selectedFont);
         jfxcb_Font.getSelectionModel().selectedItemProperty().addListener(
@@ -233,7 +359,7 @@ public class Controller implements Initializable {
 
 
         ObservableList fontSizes = FXCollections.observableArrayList(
-                18,24,48,72,100,120);
+                18,20,22,24,32,48,72,100,120);
         jfxcb_FontSize.setItems(fontSizes);
         jfxcb_FontSize.setValue(selectedFontSize);
         //jfxcb_FontSize.setEditable(true);
@@ -409,7 +535,9 @@ public class Controller implements Initializable {
         hb_MistakePan.setVisible(true);
         checkMistakes.setVisible(true);
 
-        finff();
+       // spellcheck();
+//        finff();
+        attempSix();
 
         //Hide/Show this panel (Mistakes) on double click
 //        if (hb_MistakePan.isVisible()) {
@@ -515,6 +643,8 @@ public class Controller implements Initializable {
             FW.write(ta_TextArea.getText().toString());
             FW.close();
 
+            show_msg_isSaved();
+
             //Sets autosave timing and calls autosave method for CREATED FILE(Yes, autosave methods for new and
             // opened files differ)
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -527,10 +657,13 @@ public class Controller implements Initializable {
             }, 0, 2, TimeUnit.SECONDS);
         }
 
+        if(file == null){show_msg_notSaved();}
+
     }
 
     public void autoSave() throws IOException {
         System.out.println("New file saved");
+
 
         myWorkIsSaved = true; //That means while you press the FINISH btn you will not need to save it
         // one more time. (Cuz AUTOSAVE do it for you!)
@@ -558,6 +691,10 @@ public class Controller implements Initializable {
         File selectedFile = chooser.showOpenDialog(stage);
         classSelectedFile=selectedFile;
 
+        if(classSelectedFile==null){show_msg_notSaved();}
+
+
+
         FileReader FR = new FileReader(selectedFile.getAbsolutePath().toString());
         BufferedReader BR = new BufferedReader(FR);
 
@@ -568,7 +705,11 @@ public class Controller implements Initializable {
         {
             sb.append(myText + "\n");
         }
+
         ta_TextArea.setText(sb.toString());
+
+        show_msg_isSaved();
+
 
 
         //Sets autosave time ad calls autosave method for IMPORTED FILE
@@ -580,6 +721,7 @@ public class Controller implements Initializable {
                 ioException.printStackTrace();
             }
         }, 0, 2, TimeUnit.SECONDS);
+
 
     }
 
@@ -594,6 +736,43 @@ public class Controller implements Initializable {
             FW.write(ta_TextArea.getText().toString());
             FW.close();
         }
+
+        //if(classSelectedFile == null){show_msg_notSaved();}
+    }
+
+    public void show_msg_isSaved()
+    {
+        if(btn_msg_isSaved.isVisible())
+        {
+            btn_msg_isSaved.setVisible(false);
+        } else {
+            btn_msg_isSaved.setVisible(true);
+        }
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(e -> btn_msg_isSaved.setVisible(false));
+        pause.play();
+
+    }
+
+//    public void clickTheRedSaveHint (ActionEvent e) throws IOException {
+//        getBtn_CreateNew();
+//        btn_msg_isSaved.setVisible(false);
+//    }
+
+    public void show_msg_notSaved() throws IOException {
+        if(btn_msg_notSaved.isVisible())
+        {
+            btn_msg_notSaved.setVisible(false);
+            getBtn_CreateNew();
+        } else {
+            btn_msg_notSaved.setVisible(true);
+        }
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(9));
+        pause.setOnFinished(e -> btn_msg_notSaved.setVisible(false));
+        pause.play();
+
     }
 
     /*===========================THE END OF SAVE/OPEN/AUTOSAVE HELL============================================*/
