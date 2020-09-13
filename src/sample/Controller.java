@@ -146,6 +146,7 @@ public class Controller implements Initializable {
 
         if(spellCheck(input, wordlist))
         {
+            ta_Errors.setStyle("-fx-text-fill: green");
             ta_Errors.setText("Well done! No mistakes");
             System.out.println("No errors");
         }
@@ -163,10 +164,6 @@ public class Controller implements Initializable {
 
 
 
-
-
-
-
     }
 
     public boolean spellCheck (String input, String[] dic)
@@ -176,6 +173,11 @@ public class Controller implements Initializable {
         Scanner spellChecker = new Scanner(input);
         spellChecker.useDelimiter("\\s+");
 
+        if(!grammarCheck(input, input.length()))
+        {
+            noErrors = false;
+        }
+
         while(spellChecker.hasNext())
         {
 
@@ -184,6 +186,7 @@ public class Controller implements Initializable {
             {
                 if(!checkWord(currentCheck, dic))
                 {
+                    ta_Errors.setStyle("-fx-text-fill: red");
                     ta_Errors.appendText("'" + currentCheck + "'" + " is spelled incorrectly \n");
 //                    ta_Errors.setText(currentCheck + " is incorrect");
                     System.out.println(currentCheck + " is spelt incorrectly");
@@ -216,6 +219,25 @@ public class Controller implements Initializable {
             i++;
         }
         return valid;
+    }
+
+    public boolean grammarCheck(String input, int length)
+    {
+        boolean validGrammar = true;
+        int lastCharacter = length-1;
+//         if(input.charAt(lastCharacter)!='.' || input.charAt(lastCharacter)!='!' || input.charAt(lastCharacter)!='?')
+//         {
+//             ta_Errors.setStyle("-fx-text-fill: red");
+//             ta_Errors.appendText("Missing fullstop at the end of the sentence \n");
+//             validGrammar = false;
+//         }
+        if(!Character.isUpperCase(input.charAt(0)))
+        {
+            ta_Errors.setStyle("-fx-text-fill: red");
+            ta_Errors.appendText("First letter must be an uppercase \n");
+            validGrammar = false;
+        }
+        return validGrammar;
     }
 
 
@@ -274,6 +296,49 @@ public class Controller implements Initializable {
 
 
     }
+
+    public void getBtn_Blue1()
+    {
+        ta_TextArea.setStyle("-fx-text-fill: #002448");
+    }
+    public void getBtn_Blue2()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:   #002f5e");
+    }
+    public void getBtn_Blue3()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:   #00376e");
+    }
+    public void getBtn_Blue4()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:   #090033");
+    }
+    public void getBtn_Blue5()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:   #260052");
+    }
+    public void getBtn_Red()
+    {
+        ta_TextArea.setStyle("-fx-text-fill: red");
+    }
+    public void getBtn_Pen()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:  #303030");
+    }
+    public void getBtn_Green()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:  Green");
+    }
+    public void getBtn_Blue()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:  Blue");
+    }
+    public void getBtn_Black()
+    {
+        ta_TextArea.setStyle("-fx-text-fill:  Black");
+    }
+
+
 
     public void getBtn_Bold(ActionEvent e)
     {

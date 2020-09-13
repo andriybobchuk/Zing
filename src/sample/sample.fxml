@@ -56,29 +56,30 @@
             </Button>
          </children>
       </HBox>
-      <TextArea fx:id="ta_TextArea" disable="true" layoutY="30.0" prefHeight="630.0" prefWidth="932.0" scrollTop="1.0" styleClass="text-area" wrapText="true" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TextArea fx:id="ta_TextArea" disable="true" layoutX="1.0" layoutY="30.0" prefHeight="630.0" prefWidth="932.0" scrollTop="1.0" styleClass="text-area" wrapText="true" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="30.0">
          <font>
-            <Font name="Segoe UI" size="18.0" />
+            <Font name="MV Boli" size="18.0" />
          </font>
       </TextArea>
-      <Pane layoutX="587.0" layoutY="33.0" prefHeight="636.0" prefWidth="0.9" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="-9.0" AnchorPane.topAnchor="33.0" />
-      <VBox fx:id="vb_StylePan" alignment="TOP_CENTER" layoutX="707.0" layoutY="30.0" prefHeight="636.0" prefWidth="232.0" style="-fx-background-color: #f3f3f3;" visible="false" AnchorPane.bottomAnchor="-6.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="30.0">
+      <Pane layoutX="587.0" layoutY="33.0" prefHeight="636.0" prefWidth="0.9" style="-fx-background-color: #ededed;" AnchorPane.bottomAnchor="-9.0" AnchorPane.topAnchor="33.0" />
+      <VBox fx:id="vb_StylePan" alignment="TOP_CENTER" layoutX="707.0" layoutY="30.0" prefHeight="620.0" prefWidth="232.0" style="-fx-background-color: #ededed;" visible="false" AnchorPane.bottomAnchor="-6.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="30.0">
          <children>
-            <GridPane prefHeight="93.0" prefWidth="232.0">
+            <GridPane prefHeight="95.0" prefWidth="232.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.6000244140625" minWidth="10.0" prefWidth="137.6000244140625" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.2000732421875" minWidth="10.0" prefWidth="95.1999755859375" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="219.2" minHeight="10.0" prefHeight="103.2000015258789" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="66.39999084472656" minHeight="29.20000305175781" prefHeight="41.399993896484375" />
+                  <RowConstraints maxHeight="219.2" minHeight="10.0" prefHeight="53.40000610351562" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXComboBox fx:id="jfxcb_Font" focusColor="#1976d2" labelFloat="true" prefHeight="26.0" prefWidth="122.0" promptText="Hand" unFocusColor="#1976d2">
+                  <JFXComboBox fx:id="jfxcb_Font" focusColor="#1976d2" labelFloat="true" prefHeight="26.0" prefWidth="122.0" promptText="Hand" unFocusColor="#1976d2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </JFXComboBox>
-                  <JFXComboBox fx:id="jfxcb_FontSize" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="32.0" prefHeight="26.0" prefWidth="66.0" promptText="Size" unFocusColor="#1976d2" GridPane.columnIndex="1">
+                  <JFXComboBox fx:id="jfxcb_FontSize" focusColor="#1976d2" labelFloat="true" layoutX="20.0" layoutY="32.0" prefHeight="26.0" prefWidth="66.0" promptText="Size" unFocusColor="#1976d2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <opaqueInsets>
                         <Insets left="8.0" right="8.0" />
                      </opaqueInsets>
@@ -86,7 +87,18 @@
                         <Insets left="8.0" />
                      </GridPane.margin>
                   </JFXComboBox>
+                  <Label prefHeight="47.0" prefWidth="138.0" text="Your Handwritting" textFill="#4c4c4c">
+                     <font>
+                        <Font size="15.5" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </GridPane>
             <GridPane layoutX="10.0" layoutY="146.0" prefHeight="46.0" prefWidth="232.0">
                <columnConstraints>
@@ -111,6 +123,9 @@
                      </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </GridPane>
             <GridPane layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="232.0">
                <columnConstraints>
@@ -136,16 +151,65 @@
                   </Button>
                </children>
             </GridPane>
-            <Pane prefHeight="0.9" prefWidth="145.0" style="-fx-background-color: WHITE;" />
+            <Pane prefHeight="0.9" prefWidth="145.0" style="-fx-background-color: WHITE;">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Pane>
+            <Label prefHeight="34.0" prefWidth="233.0" text="Your Pen" textFill="#3b3b3b">
+               <font>
+                  <Font size="15.5" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <GridPane prefHeight="141.0" prefWidth="232.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue1" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #002448; -fx-text-fill: WHITE;" text="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue2" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #002f5e; -fx-text-fill: WHITE;" text="2" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue3" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #00376e; -fx-text-fill: WHITE;" text="3" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue4" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #090033; -fx-text-fill: WHITE;" text="4" GridPane.columnIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue5" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #260052; -fx-text-fill: WHITE;" text="5" GridPane.columnIndex="4" />
+                  <Button graphicTextGap="0.0" mnemonicParsing="false" onAction="#getBtn_Red" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #D32F2F; -fx-text-fill: WHITE;" text="R" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Green" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #388E3C; -fx-text-fill: WHITE;" text="G" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Blue" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #1976D2; -fx-text-fill: WHITE;" text="B" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Black" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: Black; -fx-text-fill: WHITE;" text="BK" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#getBtn_Pen" prefHeight="26.0" prefWidth="39.0" style="-fx-background-radius: 0; -fx-background-color: #303030; -fx-text-fill: WHITE;" text="PEN" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="25.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="7.0" />
+               </VBox.margin>
+            </GridPane>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </VBox>
       <HBox fx:id="hb_MistakePan" layoutY="414.0" prefHeight="246.0" prefWidth="932.0" style="-fx-background-color: #f3f3f3;" visible="false" AnchorPane.bottomAnchor="-0.4000000000000057" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <HBox fx:id="hb_FinishPan" layoutY="36.0" prefHeight="630.0" prefWidth="932.0" style="-fx-background-color: #4e9cead1;" visible="false" AnchorPane.bottomAnchor="-6.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+      <HBox fx:id="hb_FinishPan" layoutY="36.0" prefHeight="630.0" prefWidth="932.0" style="-fx-background-color: #2196F3;" visible="false" AnchorPane.bottomAnchor="-6.399999999999977" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
          <children>
-            <Button fx:id="btn_Print" mnemonicParsing="false" onAction="#onActionPrint" prefHeight="648.0" prefWidth="478.0" styleClass="btn-Printers" stylesheets="@Style.css" text="Print">
+            <Button fx:id="btn_Print" mnemonicParsing="false" onAction="#onActionPrint" prefHeight="648.0" prefWidth="478.0" styleClass="btn-Printers" stylesheets="@Style.css" text=" Print">
                <graphic>
                   <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="100" />
                </graphic>
@@ -153,9 +217,9 @@
                   <Font size="53.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onActionPageSetup" prefHeight="646.0" prefWidth="454.0" styleClass="btn-Printers" stylesheets="@Style.css" text="Settings">
+            <Button mnemonicParsing="false" onAction="#onActionPageSetup" prefHeight="646.0" prefWidth="454.0" styleClass="btn-Printers" stylesheets="@Style.css" text=" Settings">
                <graphic>
-                  <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="100" />
+                  <FontAwesomeIcon fill="WHITE" size="100" />
                </graphic>
                <font>
                   <Font size="53.0" />
@@ -163,7 +227,7 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css">
+      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css" visible="false">
          <children>
             <Label layoutX="277.0" layoutY="59.0" prefHeight="43.0" prefWidth="213.0" text="Hello, it's Zing 1.78" textFill="WHITE">
                <font>
@@ -206,7 +270,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
          <graphic>
-            <FontAwesomeIcon fill="WHITE" glyphName="" />
+            <FontAwesomeIcon fill="WHITE" />
          </graphic>
       </Button>
       <Button fx:id="btn_msg_notSaved" layoutX="328.0" layoutY="614.0" mnemonicParsing="false" onAction="#show_msg_notSaved" prefHeight="30.0" prefWidth="275.0" styleClass="btn-HintRed" stylesheets="@Style.css" text="Save your work!" visible="false">
@@ -228,7 +292,7 @@
                   </TextArea>
                   <TextArea fx:id="ta_CheckArea" layoutX="-2.0" layoutY="-6.0" prefHeight="364.0" prefWidth="932.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Arial" size="18.0" />
                      </font>
                   </TextArea>
                </children>
