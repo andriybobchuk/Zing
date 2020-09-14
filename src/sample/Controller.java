@@ -1,9 +1,9 @@
 package sample;
 
+import animatefx.animation.*;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXColorPicker;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,13 +15,12 @@ import javafx.print.JobSettings;
 import javafx.print.PrinterJob;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -43,6 +42,10 @@ import java.util.regex.Pattern;
 
 public class Controller implements Initializable {
 
+    @FXML
+    private Label progress;
+    @FXML
+    public static javafx.scene.control.Label label;
     @FXML
     private JFXColorPicker cp_pen;
     @FXML
@@ -84,9 +87,9 @@ public class Controller implements Initializable {
     @FXML
     private Stage app;
     @FXML
-    private JFXComboBox jfxcb_Font;
+    private JFXComboBox<String> jfxcb_Font;
     @FXML
-    private JFXComboBox jfxcb_FontSize;
+    private JFXComboBox<Integer> jfxcb_FontSize;
     @FXML
     private Button btn_msg_isSaved;
     @FXML
@@ -262,8 +265,10 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        label=progress;
 
-        ObservableList fonts = FXCollections.observableArrayList(
+
+        ObservableList<String> fonts = FXCollections.observableArrayList(
                 "Segoe UI", "Pecita", "Times New Roman", "Arial", "Verdana", "Cambria", "Calibri", "System");
         jfxcb_Font.setItems(fonts);
         jfxcb_Font.setValue(selectedFont);
@@ -278,7 +283,7 @@ public class Controller implements Initializable {
                 });
 
 
-        ObservableList fontSizes = FXCollections.observableArrayList(
+        ObservableList<Integer> fontSizes = FXCollections.observableArrayList(
                 18,20,22,24,32,48,72,100,120);
         jfxcb_FontSize.setItems(fontSizes);
         jfxcb_FontSize.setValue(selectedFontSize);
@@ -337,6 +342,8 @@ public class Controller implements Initializable {
     {
         ta_TextArea.setStyle("-fx-text-fill:  Black");
     }
+
+
 
 
 
@@ -540,6 +547,7 @@ public class Controller implements Initializable {
         checkStyle.setVisible(true);
 
 
+        new SlideInRight(vb_StylePan).play();
 
 //        ta_TextArea.setLayoutX(28);
 //        ta_TextArea.setLayoutY(59);
@@ -736,6 +744,8 @@ public class Controller implements Initializable {
             btn_msg_isSaved.setVisible(true);
         }
 
+        new FadeIn(btn_msg_isSaved).play();
+
         PauseTransition pause = new PauseTransition(Duration.seconds(7));
         pause.setOnFinished(e -> btn_msg_isSaved.setVisible(false));
         pause.play();
@@ -755,6 +765,8 @@ public class Controller implements Initializable {
         } else {
             btn_msg_notSaved.setVisible(true);
         }
+
+        new Tada(btn_msg_notSaved).play();
 
         PauseTransition pause = new PauseTransition(Duration.seconds(13));
         pause.setOnFinished(e -> btn_msg_notSaved.setVisible(false));

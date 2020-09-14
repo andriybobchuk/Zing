@@ -201,6 +201,14 @@
                   <Insets top="7.0" />
                </VBox.margin>
             </GridPane>
+            <Label text="Zing Note 2.78" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="150.0" />
+               </VBox.margin>
+            </Label>
          </children>
          <opaqueInsets>
             <Insets />

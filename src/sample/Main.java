@@ -1,7 +1,11 @@
 package sample;
 
+import animatefx.animation.Bounce;
+import animatefx.animation.FadeIn;
+import com.sun.javafx.application.LauncherImpl;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.application.Preloader;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,12 +17,16 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
 
 
+    private static final int COUNT_LIMIT = 500000;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Zing 1.78");
         primaryStage.setScene(new Scene(root, 932, 660));
         primaryStage.show();
+
+        new FadeIn(root).play();
 
 
 
@@ -83,7 +91,19 @@ public class Main extends Application {
     }
 
 
+//    @Override
+//    public void init() throws Exception
+//    {
+//        for(int i = 0; i < COUNT_LIMIT; i++)
+//        {
+//            double progress = (100 * i) / COUNT_LIMIT;
+//            LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
+//        }
+//    }
+
     public static void main(String[] args) {
         launch(args);
+
+        //LauncherImpl.launchApplication(Main.class, Preloader.class, args);
     }
 }
