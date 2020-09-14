@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -21,6 +22,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+      //  primaryStage.getIcons().add(new Image("file: D:/DOCUMENTS/Java_Sources/Zing/src/sample/Resources/images/2.png"));
+        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("icon.png")));
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Zing 1.78");
         primaryStage.setScene(new Scene(root, 932, 660));

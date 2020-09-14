@@ -201,7 +201,7 @@
                   <Insets top="7.0" />
                </VBox.margin>
             </GridPane>
-            <Label text="Zing Note 2.78" textFill="WHITE">
+            <Label text="Zing Note 1.78" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -235,7 +235,7 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css" visible="false">
+      <Pane fx:id="p_Hello" layoutX="200.0" layoutY="145.0" prefHeight="328.0" prefWidth="532.0" style="-fx-background-color: #2196F3;" stylesheets="@Style.css">
          <children>
             <Label layoutX="277.0" layoutY="59.0" prefHeight="43.0" prefWidth="213.0" text="Hello, it's Zing 1.78" textFill="WHITE">
                <font>
