@@ -11,7 +11,7 @@ Writting text > checking errors > style editing > saving/printing/sharing!
 
 
 ## Technical part
-Language: JAVA (JavaFX UI);
+Language: JAVA 15 (JavaFX UI);
 Soft used: Intellij IDEA + SceneBuilder
 
 ## License
