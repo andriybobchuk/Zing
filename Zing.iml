@@ -7,10 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="fontawesomefx-8.2" level="project" />
     <orderEntry type="library" name="jfoenix-9.0.10" level="project" />
     <orderEntry type="library" name="controlsfx-11.0.2" level="project" />
     <orderEntry type="library" name="io.github.typhon0:AnimateFX:1.2.1" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

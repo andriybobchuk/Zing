@@ -2,7 +2,6 @@ package sample;
 
 import animatefx.animation.*;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXColorPicker;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -46,10 +44,6 @@ public class Controller implements Initializable {
     private Label progress;
     @FXML
     public static javafx.scene.control.Label label;
-    @FXML
-    private JFXColorPicker cp_pen;
-    @FXML
-    private AnchorPane anchorPane;
     @FXML
     private Pane checkWrite;
     @FXML
@@ -83,10 +77,6 @@ public class Controller implements Initializable {
     @FXML
     private Pane p_Hello;
     @FXML
-    private Hyperlink hl;
-    @FXML
-    private Stage app;
-    @FXML
     private JFXComboBox<String> jfxcb_Font;
     @FXML
     private JFXComboBox<Integer> jfxcb_FontSize;
@@ -95,8 +85,6 @@ public class Controller implements Initializable {
     @FXML
     private Button btn_msg_notSaved;
     @FXML
-    private Pane checkNotSaved;
-    @FXML
     private SplitPane sp_SpellCheckLayout;
     @FXML
     private TextArea ta_LineCounter;
@@ -104,13 +92,102 @@ public class Controller implements Initializable {
     private TextArea ta_CheckArea;
     @FXML
     private TextArea ta_Errors;
-
-
     public boolean myWorkIsSaved = false;
+    ////////////////////////////////////////THE END OF INITIALIZATION AREA/////////////////////////////////////////////
+
+
+
+    /*=============================THE BEGINNING OF SWITCHING BETWEEN TABS METHODS===================================*/
+
+    //Method getBtn_Write returns app setup to its normal view(closes all tabs)
+    public void getBtn_Write(ActionEvent e) {
+        vb_StylePan.setVisible(false); //Hides style panel
+        hb_MistakePan.setVisible(false); //Hides mistakes panel
+        hb_FinishPan.setVisible(false); //Hides finish panel
+
+        checkMistakes.setVisible(false);
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(false);
+
+        checkWrite.setVisible(true);
+
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+
+        ta_Errors.setText("");
+
+    }
+
+    //Method getBtn_Mistakes returns app setup to Mistake Panel(closes all OTHER tabs)
+    public void getBtn_Mistakes(ActionEvent e) throws IOException {
+        vb_StylePan.setVisible(false); //Hides style panel
+        hb_FinishPan.setVisible(false); //Hides finish panel
+
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(false);
+        checkWrite.setVisible(false);
+
+        //hb_MistakePan.setVisible(true);
+        checkMistakes.setVisible(true);
+
+        findMistakes();
+    }
+
+    //Method getBtn_Style returns app setup to Style Panel(closes all OTHER tabs)
+    public void getBtn_Style(ActionEvent e) throws IOException {
+        hb_MistakePan.setVisible(false); //Hides mistakes panel
+        hb_FinishPan.setVisible(false); //Hides finish panel
+
+        checkMistakes.setVisible(false);
+        checkFinish.setVisible(false);
+        checkWrite.setVisible(false);
+
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+        ta_Errors.setText("");
+
+        vb_StylePan.setVisible(true);
+        checkStyle.setVisible(true);
+
+        new SlideInRight(vb_StylePan).play();//animation
+
+    }
+
+    //Method getBtn_Finish returns app setup to Finish Panel(closes all OTHER tabs)
+    public void getBtn_Finish(ActionEvent e) throws IOException {
+        //Hide all other tabs
+        vb_StylePan.setVisible(false);
+        hb_MistakePan.setVisible(false);
+        hb_FinishPan.setVisible(true);
+
+        checkWrite.setVisible(false);
+        checkMistakes.setVisible(false);
+        checkStyle.setVisible(false);
+        checkFinish.setVisible(true);
+
+        if(sp_SpellCheckLayout.isVisible())
+        {
+            sp_SpellCheckLayout.setVisible(false);
+            ta_TextArea.setText(ta_CheckArea.getText());
+        }
+        ta_Errors.setText("");
+
+        if(myWorkIsSaved == false)//If you haven't saved your work yet, do it now.
+        {
+            getBtn_CreateNew();
+        }
+    }
+    /*=============================THE END OF SWITCHING BETWEEN TABS METHODS=========================================*/
+
 
 
     /*=============================THE BEGINNING OF SPELLCHECK FEATURE==============================================*/
-
 
     public void findMistakes() {
 
@@ -129,11 +206,8 @@ public class Controller implements Initializable {
         String[] wordlist = lines.toArray(new String[0]);
 
 
-
-
         if(sp_SpellCheckLayout.isVisible())
         {
-//            ta_CheckArea.setText(ta_TextArea.getText());
             ta_Errors.setText("");
         }
         else
@@ -146,7 +220,6 @@ public class Controller implements Initializable {
         String input = ta_CheckArea.getText();//textarea
 
 
-
         if(spellCheck(input, wordlist))
         {
             ta_Errors.setStyle("-fx-text-fill: green");
@@ -157,15 +230,6 @@ public class Controller implements Initializable {
         {
             System.out.println("Errors");
         }
-
-
-        //just a code for side numeric area
-        for(int i=1; i<10; i++)
-        {
-            ta_LineCounter.appendText(i + "\n");
-        }
-
-
 
     }
 
@@ -183,7 +247,6 @@ public class Controller implements Initializable {
 
         while(spellChecker.hasNext())
         {
-
             currentCheck = spellChecker.next();
             if(!isSpecial(currentCheck))
             {
@@ -228,36 +291,25 @@ public class Controller implements Initializable {
     {
         boolean validGrammar = true;
         int lastCharacter = length-1;
-//         if(input.charAt(lastCharacter)!='.' || input.charAt(lastCharacter)!='!' || input.charAt(lastCharacter)!='?')
-//         {
-//             ta_Errors.setStyle("-fx-text-fill: red");
-//             ta_Errors.appendText("Missing fullstop at the end of the sentence \n");
-//             validGrammar = false;
-//         }
+
         if(!Character.isUpperCase(input.charAt(0)))
         {
+            String output = input.substring(0, 1).toUpperCase() + input.substring(1);
+            ta_CheckArea.setText(output);//Sets first char to Uppercase automatically
+
             ta_Errors.setStyle("-fx-text-fill: red");
-            ta_Errors.appendText("First letter must be an uppercase \n");
+            ta_Errors.appendText("First letter must be an uppercase (CORRECTED!) \n");
             validGrammar = false;
         }
         return validGrammar;
     }
-
-
-
-
-
-
-
-
-
-
     /*=============================THE END OF SPELLCHECK FEATURE====================================================*/
 
 
 
+
     /*=============================THE BEGINNING OF FONT STYLE SETTINGS=============================================*/
-    String selectedFont = "Segoe UI";
+    String selectedFont = "MV Boli";
     int selectedFontSize = 18;
     boolean bold = false;
     boolean italic = false;
@@ -269,7 +321,7 @@ public class Controller implements Initializable {
 
 
         ObservableList<String> fonts = FXCollections.observableArrayList(
-                "Segoe UI", "Pecita", "Times New Roman", "Arial", "Verdana", "Cambria", "Calibri", "System");
+                "MV Boli", "Segoe UI", "Pecita", "Times New Roman", "Arial", "Verdana", "Calibri", "System");
         jfxcb_Font.setItems(fonts);
         jfxcb_Font.setValue(selectedFont);
         jfxcb_Font.getSelectionModel().selectedItemProperty().addListener(
@@ -278,7 +330,6 @@ public class Controller implements Initializable {
                     public void changed(ObservableValue observableValue, Object o, Object t1) {
                         System.out.println(t1);
                         selectedFont = (String) t1;
-                        //ta_TextArea.setFont(Font.font(selectedFont, selectedFontSize));
                     }
                 });
 
@@ -287,7 +338,6 @@ public class Controller implements Initializable {
                 18,20,22,24,32,48,72,100,120);
         jfxcb_FontSize.setItems(fontSizes);
         jfxcb_FontSize.setValue(selectedFontSize);
-        //jfxcb_FontSize.setEditable(true);
 
         jfxcb_FontSize.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener() {
@@ -295,10 +345,8 @@ public class Controller implements Initializable {
                     public void changed(ObservableValue observableValue, Object o, Object t1) {
                         System.out.println(t1);
                         selectedFontSize = (int) t1;
-                        //ta_TextArea.setFont(Font.font(selectedFont, selectedFontSize));
                     }
                 });
-
 
     }
 
@@ -344,9 +392,6 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
     public void getBtn_Bold(ActionEvent e)
     {
         if(bold==false)
@@ -367,17 +412,6 @@ public class Controller implements Initializable {
             italic = false;
         }
     }
-
-//    public void getBtn_Underlined(ActionEvent e)
-//    {
-//
-//        if(underlined==false)
-//        {
-//            underlined = true;
-//        } else {
-//            underlined = false;
-//        }
-//    }
 
     public void onClickApply(ActionEvent e)
     {
@@ -471,125 +505,6 @@ public class Controller implements Initializable {
     }
     /*=============================THE END OF PRINTER TASKS========================================================*/
 
-
-
-    //Method getBtn_Write returns app setup to its normal view(closes all tabs)
-    public void getBtn_Write(ActionEvent e) {
-        vb_StylePan.setVisible(false); //Hides style panel
-        hb_MistakePan.setVisible(false); //Hides mistakes panel
-        hb_FinishPan.setVisible(false); //Hides finish panel
-
-        checkMistakes.setVisible(false);
-        checkStyle.setVisible(false);
-        checkFinish.setVisible(false);
-
-        checkWrite.setVisible(true);
-
-        if(sp_SpellCheckLayout.isVisible())
-        {
-            sp_SpellCheckLayout.setVisible(false);
-            ta_TextArea.setText(ta_CheckArea.getText());
-        }
-
-//        sp_SpellCheckLayout.setVisible(false);
-//        ta_TextArea.setText(ta_CheckArea.getText());
-        ta_Errors.setText("");
-
-//        if(checkWrite.isVisible()){
-//            checkWrite.setVisible(false);
-//        } else{
-//            checkWrite.setVisible(true);
-//        }
-
-    }
-
-    //Method getBtn_Mistakes returns app setup to Mistake Panel(closes all OTHER tabs)
-    public void getBtn_Mistakes(ActionEvent e) throws IOException {
-        vb_StylePan.setVisible(false); //Hides style panel
-        hb_FinishPan.setVisible(false); //Hides finish panel
-
-        checkStyle.setVisible(false);
-        checkFinish.setVisible(false);
-        checkWrite.setVisible(false);
-
-        hb_MistakePan.setVisible(true);
-        checkMistakes.setVisible(true);
-
-        findMistakes();
-
-        //Hide/Show this panel (Mistakes) on double click
-//        if (hb_MistakePan.isVisible()) {
-//            hb_MistakePan.setVisible(false);
-//            checkMistakes.setVisible(false);
-//        } else {
-//            hb_MistakePan.setVisible(true);
-//            checkMistakes.setVisible(true);
-//        }
-    }
-
-    //Method getBtn_Style returns app setup to Style Panel(closes all OTHER tabs)
-    public void getBtn_Style(ActionEvent e) throws IOException {
-        hb_MistakePan.setVisible(false); //Hides mistakes panel
-        hb_FinishPan.setVisible(false); //Hides finish panel
-
-        checkMistakes.setVisible(false);
-        checkFinish.setVisible(false);
-        checkWrite.setVisible(false);
-
-        if(sp_SpellCheckLayout.isVisible())
-        {
-            sp_SpellCheckLayout.setVisible(false);
-            ta_TextArea.setText(ta_CheckArea.getText());
-        }
-        ta_Errors.setText("");
-
-        vb_StylePan.setVisible(true);
-        checkStyle.setVisible(true);
-
-
-        new SlideInRight(vb_StylePan).play();
-
-//        ta_TextArea.setLayoutX(28);
-//        ta_TextArea.setLayoutY(59);
-//        ta_TextArea.setPrefWidth(644);
-//        ta_TextArea.setPrefHeight(613);
-
-        //Hide/Show this panel (Style) on double click
-//        if (vb_StylePan.isVisible()) {
-//            vb_StylePan.setVisible(false);
-//            checkStyle.setVisible(false);
-//        } else {
-//            vb_StylePan.setVisible(true);
-//            checkStyle.setVisible(true);
-//
-////            ta_TextArea.setStyle("fx: layoutX=\"25.0\" layoutY=\"55.0\" prefHeight=\"605.0\" prefWidth=\"602.0\" scrollTop=\"1.0\" wrapText=\"true\" AnchorPane.bottomAnchor=\"-0.6000000000000227\" AnchorPane.leftAnchor=\"25.0\" AnchorPane.rightAnchor=\"304.6\" AnchorPane.topAnchor=\"55.0\"");
-//        }
-    }
-
-    //Method getBtn_Finish returns app setup to Finish Panel(closes all OTHER tabs)
-    public void getBtn_Finish(ActionEvent e) throws IOException {
-        //Hide all other tabs
-        vb_StylePan.setVisible(false);
-        hb_MistakePan.setVisible(false);
-        hb_FinishPan.setVisible(true);
-
-        checkWrite.setVisible(false);
-        checkMistakes.setVisible(false);
-        checkStyle.setVisible(false);
-        checkFinish.setVisible(true);
-
-        if(sp_SpellCheckLayout.isVisible())
-        {
-            sp_SpellCheckLayout.setVisible(false);
-            ta_TextArea.setText(ta_CheckArea.getText());
-        }
-        ta_Errors.setText("");
-
-        if(myWorkIsSaved == false)//If you haven't saved your work yet, do it now.
-        {
-            getBtn_CreateNew();
-        }
-    }
 
 
 
@@ -689,7 +604,6 @@ public class Controller implements Initializable {
         if(classSelectedFile==null){show_msg_notSaved();}
 
 
-
         FileReader FR = new FileReader(selectedFile.getAbsolutePath().toString());
         BufferedReader BR = new BufferedReader(FR);
 
@@ -704,7 +618,6 @@ public class Controller implements Initializable {
         ta_TextArea.setText(sb.toString());
 
         show_msg_isSaved();
-
 
 
         //Sets autosave time ad calls autosave method for IMPORTED FILE
@@ -732,7 +645,6 @@ public class Controller implements Initializable {
             FW.close();
         }
 
-        //if(classSelectedFile == null){show_msg_notSaved();}
     }
 
     public void show_msg_isSaved()
@@ -752,10 +664,6 @@ public class Controller implements Initializable {
 
     }
 
-//    public void clickTheRedSaveHint (ActionEvent e) throws IOException {
-//        getBtn_CreateNew();
-//        btn_msg_isSaved.setVisible(false);
-//    }
 
     public void show_msg_notSaved() throws IOException {
         if(btn_msg_notSaved.isVisible())
@@ -773,13 +681,11 @@ public class Controller implements Initializable {
         pause.play();
 
     }
-
-    /*===========================THE END OF SAVE/OPEN/AUTOSAVE HELL============================================*/
-
+    /*===========================THE END OF SAVE/OPEN/AUTOSAVE HELL=================================================*/
 
 
 
-
+    /*========================================OTHER METHODS=========================================================*/
     //Method shows you my site in your default browser when you click on a link in a splash screen.
     public void getURL (ActionEvent e)
     {
